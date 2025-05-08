@@ -18,4 +18,9 @@ public class NinjaFrogStats
         }
         return false;
     }
+
+    public bool CanMove()
+    {
+        return speed > 0;
+    }
 }

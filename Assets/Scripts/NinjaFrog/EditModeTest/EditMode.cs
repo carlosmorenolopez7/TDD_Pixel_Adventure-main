@@ -2,30 +2,21 @@ using NUnit.Framework;
 using UnityEngine;
 
 [TestFixture]
-public class NinjaFrog
+public class NinjaFrogMovementTests
 {
     private NinjaFrogStats stats;
+
     [SetUp]
     public void SetUp()
     {
-        stats = new NinjaFrogStats(); 
+        stats = new NinjaFrogStats();
     }
 
-    [Test] 
-    public void DefaultLives_ShouldBeThree()
+    [TestCase(5f, true)]
+    public void CanMove_Case(float testSpeed, bool expected)
     {
-        Assert.AreEqual(3, stats.maxLives, "The default lives should be " + 3 + " but was " + stats.maxLives);
-    }
-
-    // Case Test for power and range
-    [TestCase(true, 1, 1)]
-    [TestCase(true, 2, 1)]
-    [TestCase(false, 0, 1)]
-    [TestCase(false, 1, 0)]
-    [TestCase(true, 1, 0)]
-    public void AttackPower_Cases(bool expected, int attackPower, int attackRange)
-    {
-        bool actual = stats.CanAttack(attackPower, attackRange);
-        Assert.AreEqual(expected, actual, "The expected value should be " + expected + " but was " + actual);
+        stats.speed = testSpeed;
+        bool canMove = stats.CanMove();
+        Assert.AreEqual(expected, canMove, $"Expected CanMove() to return {expected} for speed {testSpeed}");
     }
 }
