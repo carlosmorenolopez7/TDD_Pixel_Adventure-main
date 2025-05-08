@@ -17,13 +17,23 @@ public class NinjaFrogMovementTest
         Debug.Log("Scene Loaded");
     }
     [UnityTest]
-    public IEnumerator NinjaFrogFall()
-    {   
-        yield return new WaitForSeconds(2);
+    public IEnumerator NinjaFrogSpawnsWithCorrectComponents_Case()
+    {
+        yield return new WaitForSeconds(1);
+
         NinjaFrog = GameObject.Find("NinjaFrog");
-        Ground = GameObject.Find("Ground");
-        Assert.That(NinjaFrog.transform.position.y > Ground.transform.position.y);
-       
+        Assert.IsNotNull(NinjaFrog, "NinjaFrog was not found in the scene");
+
+        var sprite = NinjaFrog.GetComponent<SpriteRenderer>();
+        Assert.IsNotNull(sprite, "NinjaFrog does not have a SpriteRenderer");
+
+        var collider = NinjaFrog.GetComponent<Collider2D>();
+        Assert.IsNotNull(collider, "NinjaFrog does not have a Collider2D");
+
+        var rb = NinjaFrog.GetComponent<Rigidbody2D>();
+        Assert.IsNotNull(rb, "NinjaFrog does not have a Rigidbody2D");
+
+        yield return null;
     }
 
 
